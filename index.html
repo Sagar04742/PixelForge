@@ -15,6 +15,7 @@
       href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
     />
     <link rel="stylesheet" href="style.css" />
+    
     <style>
       .wc-img-5 {
         background: linear-gradient(135deg, #0a0a1a, #1a0a2e, #2d1b69);
@@ -77,7 +78,6 @@
         flex-shrink: 0;
       }
 
-      /* Contact section WhatsApp hero block */
       .contact-wa-block {
         margin-top: 1rem;
         padding: 2rem;
@@ -105,7 +105,6 @@
         display: block;
       }
 
-      /* Remove form, replace with WhatsApp panel */
       .contact-right-wa {
         display: flex;
         flex-direction: column;
@@ -161,6 +160,169 @@
       }
       .wa-note span {
         flex-shrink: 0;
+      }
+
+      /* NEW MAINTENANCE SECTION STYLES */
+      .maintenance-wrapper {
+        margin-top: 4.5rem;
+        background: var(--card-bg, #08080c);
+        border: 1px solid var(--border, #222);
+        border-radius: 24px;
+        padding: 4rem 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .maintenance-header {
+        text-align: center;
+        margin-bottom: 3.5rem;
+      }
+      .maintenance-header h3 {
+        font-family: var(--font-display, 'Syne', sans-serif);
+        font-size: 2.2rem;
+        margin-bottom: 1rem;
+        letter-spacing: -0.5px;
+      }
+      .maintenance-header p {
+        color: var(--text-muted, #999);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+        font-size: 1.05rem;
+      }
+      .maintenance-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 3rem;
+        align-items: center;
+      }
+      .pay-as-you-go {
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+      .pay-go-item {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border, #222);
+        padding: 1.5rem 2rem;
+        border-radius: 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: border-color 0.3s ease, background 0.3s ease;
+      }
+      .pay-go-item:hover {
+        border-color: rgba(180, 120, 255, 0.3);
+        background: rgba(180, 120, 255, 0.03);
+      }
+      .pay-go-info h4 {
+        font-family: var(--font-display, 'Syne', sans-serif);
+        font-size: 1.15rem;
+        margin-bottom: 0.3rem;
+      }
+      .pay-go-info p {
+        font-size: 0.88rem;
+        color: var(--text-muted, #999);
+        margin: 0;
+      }
+      .pay-go-price {
+        font-family: var(--font-mono, 'Space Mono', monospace);
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #fff;
+      }
+      .monthly-plan-card {
+        background: linear-gradient(145deg, rgba(180, 120, 255, 0.08), rgba(0, 212, 170, 0.03));
+        border: 1px solid rgba(180, 120, 255, 0.25);
+        padding: 3rem;
+        border-radius: 20px;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      }
+      .mp-badge {
+        position: absolute;
+        top: -14px;
+        right: 3rem;
+        background: linear-gradient(90deg, #b478ff, #7f39ff);
+        color: #fff;
+        padding: 6px 16px;
+        border-radius: 30px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        box-shadow: 0 5px 15px rgba(180, 120, 255, 0.3);
+      }
+      .monthly-plan-card h4 {
+        font-family: var(--font-display, 'Syne', sans-serif);
+        font-size: 1.6rem;
+        margin-bottom: 0.75rem;
+      }
+      .mp-price-wrap {
+        margin-bottom: 2rem;
+      }
+      .mp-price {
+        font-size: 3rem;
+        font-weight: 800;
+        line-height: 1;
+        font-family: var(--font-display, 'Syne', sans-serif);
+        letter-spacing: -1px;
+      }
+      .mp-price span {
+        font-size: 1.1rem;
+        font-weight: 400;
+        color: var(--text-muted, #999);
+        font-family: var(--font-body, 'DM Sans', sans-serif);
+        letter-spacing: 0;
+      }
+      .mp-features {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 2.5rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 1.25rem;
+      }
+      .mp-features li {
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        font-size: 0.98rem;
+        line-height: 1.5;
+        color: var(--text-muted, #999);
+      }
+      .mp-features li strong {
+        color: #fff;
+      }
+      .mp-features li::before {
+        content: '✓';
+        color: #b478ff;
+        font-weight: bold;
+        background: rgba(180, 120, 255, 0.1);
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        flex-shrink: 0;
+        font-size: 0.8rem;
+        margin-top: 2px;
+      }
+      @media (max-width: 900px) {
+        .maintenance-grid {
+          grid-template-columns: 1fr;
+        }
+        .maintenance-wrapper {
+          padding: 3rem 1.5rem;
+        }
+        .monthly-plan-card {
+          padding: 2.5rem 1.5rem;
+        }
+        .mp-badge {
+          right: 1.5rem;
+        }
       }
     </style>
   </head>
@@ -782,6 +944,65 @@
             >
           </div>
         </div>
+
+        <!-- NEW MAINTENANCE & UPDATES SECTION -->
+        <div class="maintenance-wrapper reveal-up">
+          <div class="maintenance-header">
+            <h3>Website Maintenance & Updates</h3>
+            <p>Keep your website fresh and running smoothly post-launch. Choose pay-as-you-go flexibility or our comprehensive monthly plan.</p>
+          </div>
+          <div class="maintenance-grid">
+            
+            <!-- Pay As You Go -->
+            <div class="pay-as-you-go">
+              <div class="pay-go-item">
+                <div class="pay-go-info">
+                  <h4>Small Update</h4>
+                  <p>Text changes, image swaps, minor bugs.</p>
+                </div>
+                <div class="pay-go-price">₹199</div>
+              </div>
+              <div class="pay-go-item">
+                <div class="pay-go-info">
+                  <h4>Full Page Update</h4>
+                  <p>Redesigning a page or adding a new section.</p>
+                </div>
+                <div class="pay-go-price">₹399</div>
+              </div>
+              <div class="pay-go-item">
+                <div class="pay-go-info">
+                  <h4>Major Changes</h4>
+                  <p>Significant layout changes or complex features.</p>
+                </div>
+                <div class="pay-go-price">₹999</div>
+              </div>
+            </div>
+
+            <!-- Monthly Plan -->
+            <div class="monthly-plan-card">
+              <div class="mp-badge">Best Value</div>
+              <h4>Monthly Maintenance</h4>
+              <div class="mp-price-wrap">
+                <div class="mp-price">₹1,500<span>/month</span></div>
+              </div>
+              <ul class="mp-features">
+                <li><strong>Up to 3–4 small updates</strong> every single month</li>
+                <li><strong>3-4 full page update</strong> included if needed</li>
+                <li><strong>Priority response</strong> (we reply within 12 hours)</li>
+                <li><strong>Basic website health check</strong> & security monitoring</li>
+              </ul>
+              <a
+                href="https://wa.me/917439126630?text=Hi%20PixelForge!%20I%27m%20interested%20in%20the%20Monthly%20Maintenance%20plan%20(₹1%2C500/month)."
+                target="_blank"
+                rel="noopener"
+                class="btn-primary btn-full"
+                style="text-align: center;"
+              >Subscribe & Relax →</a>
+            </div>
+
+          </div>
+        </div>
+
         <!-- ADD-ONS -->
         <div class="addons-section reveal-up">
           <div class="addons-header">
@@ -910,8 +1131,7 @@
               <span class="tc-role">AI Automation Specialist & Co-Founder</span>
               <p>
                 The AI architect of the team. Designs and deploys intelligent
-                automation systems — from WhatsApp bots to custom AI workflows —
-                that save businesses hours every single day.
+                automation systems — from WhatsApp bots to custom AI workflows.
               </p>
               <div class="tc-skills">
                 <span>ChatGPT API</span><span>WhatsApp API</span
