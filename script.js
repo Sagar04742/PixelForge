@@ -3,6 +3,32 @@
    GSAP · Three.js · Swiper · Custom Cursor
    ═══════════════════════════════════════════ */
 
+/* ─── PRICING TOGGLE FUNCTION ────────────── */
+// Placed at the top so it's globally available for the onclick events
+window.switchPricing = function(type) {
+  var b = document.getElementById('pricingBusiness');
+  var p = document.getElementById('pricingPortfolio');
+  var tb = document.getElementById('toggleBusiness');
+  var tp = document.getElementById('togglePortfolio');
+
+  if (type === 'business') {
+    b.style.display = 'grid'; 
+    p.style.display = 'none';
+    tb.classList.add('ptoggle-active'); 
+    tp.classList.remove('ptoggle-active');
+  } else {
+    b.style.display = 'none'; 
+    p.style.display = 'grid';
+    tp.classList.add('ptoggle-active'); 
+    tb.classList.remove('ptoggle-active');
+  }
+  
+  // Refresh GSAP ScrollTrigger so animations don't break after layout changes
+  if(typeof ScrollTrigger !== 'undefined') {
+    setTimeout(() => ScrollTrigger.refresh(), 100);
+  }
+};
+
 /* ─── LOADER ─────────────────────────────── */
 (function () {
   const loader = document.getElementById('loader');
@@ -42,7 +68,6 @@ function initCursor() {
   const follower = document.getElementById('cursor-follower');
   if (!cursor || !follower) return;
 
-  // Hide on touch devices
   if (window.matchMedia('(pointer: coarse)').matches) {
     cursor.style.display = 'none';
     follower.style.display = 'none';
@@ -68,7 +93,6 @@ function initCursor() {
   }
   animateFollower();
 
-  // Expand on hover over interactive elements
   document.querySelectorAll('a, button, .service-card, .work-card, .team-card, .pricing-card').forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursor.style.width = '16px';
@@ -109,7 +133,6 @@ function initHamburger() {
     link.addEventListener('click', () => menu.classList.remove('open'));
   });
 
-  // Close on outside click
   document.addEventListener('click', (e) => {
     if (!menu.contains(e.target) && !btn.contains(e.target)) {
       menu.classList.remove('open');
@@ -133,7 +156,6 @@ function initThreeJS() {
   const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
   camera.position.z = 5;
 
-  // Particles
   const count = 1800;
   const positions = new Float32Array(count * 3);
   const colors = new Float32Array(count * 3);
@@ -167,28 +189,24 @@ function initThreeJS() {
   const points = new THREE.Points(geo, mat);
   scene.add(points);
 
-  // Floating wireframe torus
   const torusGeo = new THREE.TorusGeometry(2.5, 0.5, 8, 50);
   const torusMat = new THREE.MeshBasicMaterial({ color: 0x00e5ff, wireframe: true, opacity: 0.06, transparent: true });
   const torus = new THREE.Mesh(torusGeo, torusMat);
   torus.position.set(4, -1, -2);
   scene.add(torus);
 
-  // Floating icosahedron
   const icoGeo = new THREE.IcosahedronGeometry(1.2, 0);
   const icoMat = new THREE.MeshBasicMaterial({ color: 0x7c3aed, wireframe: true, opacity: 0.08, transparent: true });
   const ico = new THREE.Mesh(icoGeo, icoMat);
   ico.position.set(-4.5, 1.5, -1);
   scene.add(ico);
 
-  // Mouse parallax
   let mouseX = 0, mouseY = 0;
   document.addEventListener('mousemove', (e) => {
     mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
     mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
   });
 
-  // Resize handler
   window.addEventListener('resize', () => {
     const nw = canvas.offsetWidth, nh = canvas.offsetHeight;
     camera.aspect = nw / nh;
@@ -204,7 +222,6 @@ function initThreeJS() {
     torus.rotation.y += 0.005;
     ico.rotation.x -= 0.004;
     ico.rotation.z += 0.003;
-    // Parallax
     camera.position.x += (mouseX * 0.4 - camera.position.x) * 0.05;
     camera.position.y += (mouseY * 0.3 - camera.position.y) * 0.05;
     camera.lookAt(scene.position);
@@ -216,7 +233,6 @@ function initThreeJS() {
 /* ─── GSAP ANIMATIONS ────────────────────── */
 function initGSAP() {
   if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') {
-    // Fallback: make everything visible
     document.querySelectorAll('.reveal-up, .reveal-right').forEach(el => {
       el.style.opacity = '1';
       el.style.transform = 'none';
@@ -226,7 +242,6 @@ function initGSAP() {
 
   gsap.registerPlugin(ScrollTrigger);
 
-  // Hero entrance (driven by CSS animations, GSAP just adds more polish)
   gsap.fromTo('.hero-sub',
     { opacity: 0, y: 25 },
     { opacity: 1, y: 0, duration: 0.9, delay: 0.8, ease: 'power3.out' }
@@ -240,7 +255,6 @@ function initGSAP() {
     { opacity: 1, y: 0, duration: 0.9, delay: 1.2, ease: 'power3.out' }
   );
 
-  // Scroll-triggered reveals — using IntersectionObserver approach for stability
   const revealEls = document.querySelectorAll('.reveal-up');
   revealEls.forEach(el => {
     const delay = parseFloat(el.getAttribute('data-delay') || '0');
@@ -264,7 +278,6 @@ function initGSAP() {
     );
   });
 
-  // Service cards
   gsap.fromTo('.service-card',
     { opacity: 0, y: 40, scale: 0.96 },
     {
@@ -273,7 +286,6 @@ function initGSAP() {
     }
   );
 
-  // Team cards
   gsap.fromTo('.team-card',
     { opacity: 0, y: 50 },
     {
@@ -282,7 +294,6 @@ function initGSAP() {
     }
   );
 
-  // Process steps
   gsap.fromTo('.process-step',
     { opacity: 0, y: 40 },
     {
@@ -291,7 +302,6 @@ function initGSAP() {
     }
   );
 
-  // Pricing cards
   gsap.fromTo('.pricing-card',
     { opacity: 0, y: 40 },
     {
@@ -300,7 +310,6 @@ function initGSAP() {
     }
   );
 
-  // Footer
   gsap.fromTo('#footer .footer-grid > *',
     { opacity: 0, y: 30 },
     {
