@@ -1483,7 +1483,7 @@ section { padding: 7rem 0; }
 
 .team-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   align-items: start;
 }
@@ -1494,6 +1494,7 @@ section { padding: 7rem 0; }
   border-radius: var(--radius);
   overflow: hidden;
   transition: border-color var(--transition), transform var(--transition);
+  position: relative;
 }
 
 .team-card:hover {
@@ -1501,13 +1502,47 @@ section { padding: 7rem 0; }
   transform: translateY(-8px);
 }
 
-.tc-featured {
-  border-color: rgba(0, 229, 255, 0.2);
-  background: linear-gradient(135deg, rgba(0, 229, 255, 0.05), rgba(124, 58, 237, 0.05));
-  transform: translateY(-12px);
+/* Founder card — same size & position as the rest, just a quiet
+   leadership marker: thin blue top edge, small badge, tinted role text. */
+.tc-founder {
+  border-color: rgba(37, 99, 235, 0.35);
 }
 
-.tc-featured:hover { transform: translateY(-18px); }
+.tc-founder::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb, var(--accent));
+  z-index: 2;
+}
+
+.tc-founder:hover {
+  border-color: rgba(37, 99, 235, 0.55);
+  transform: translateY(-8px);
+}
+
+.tc-founder .tc-role { color: #5b9dff; }
+
+.tc-founder-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(37, 99, 235, 0.18);
+  border: 1px solid rgba(91, 157, 255, 0.45);
+  color: #5b9dff;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+  border-radius: 50px;
+  backdrop-filter: blur(4px);
+  z-index: 3;
+}
 
 .tc-image-wrap {
   position: relative;
@@ -1873,6 +1908,7 @@ section { padding: 7rem 0; }
 /* ─── TABLET LANDSCAPE / SMALL DESKTOP (≤1100px) ─── */
 @media (max-width: 1100px) {
   .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
   #pricingBusiness, #pricingPortfolio, #pricingDesign { grid-template-columns: 1fr !important; gap: 2rem; }
   .pc-featured { transform: none; }
   .pc-featured:hover { transform: translateY(-6px); }
@@ -1887,8 +1923,6 @@ section { padding: 7rem 0; }
   .about-grid { grid-template-columns: 1fr; gap: 3rem; }
   .about-right { display: none; }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
-  .tc-featured { transform: none; }
-  .tc-featured:hover { transform: translateY(-8px); }
   .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
   .addons-grid { grid-template-columns: 1fr; }
   .maintenance-grid { grid-template-columns: 1fr; }
@@ -1960,10 +1994,6 @@ section { padding: 7rem 0; }
 
   .services-grid { grid-template-columns: 1fr; }
   .team-grid { grid-template-columns: 1fr; }
-
-  /* Team — remove the featured offset on small screens */
-  .tc-featured { transform: none; }
-  .tc-featured:hover { transform: translateY(-8px); }
 
   .footer-grid { grid-template-columns: 1fr; }
   .footer-brand { grid-column: auto; }
