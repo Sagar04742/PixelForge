@@ -58,60 +58,22 @@ function initAll() {
     '.hero-badge, .hero-title .line, .hero-sub, .hero-cta, .hero-services-pills'
   ).forEach(el => { el.style.animationPlayState = 'running'; });
 
-  initCursor();
-  initNavbar();
-  initHamburger();
-  initPricingToggle();
-  initThreeJS();
-  initGSAP();
-  initSwipers();
-  initRevealFallback();
-  initCounters();
+  safeInit(initNavbar);
+  safeInit(initHamburger);
+  safeInit(initPricingToggle);
+  safeInit(initThreeJS);
+  safeInit(initGSAP);
+  safeInit(initSwipers);
+  safeInit(initRevealFallback);
+  safeInit(initCounters);
 }
 
-/* ─── CURSOR ─────────────────────────────── */
-function initCursor() {
-  const cursor   = document.getElementById('cursor');
-  const follower = document.getElementById('cursor-follower');
-  if (!cursor || !follower) return;
-
-  if (window.matchMedia('(pointer: coarse)').matches) {
-    cursor.style.display        = 'none';
-    follower.style.display      = 'none';
-    document.body.style.cursor  = 'auto';
-    return;
-  }
-
-  let mx = 0, my = 0, fx = 0, fy = 0;
-
-  document.addEventListener('mousemove', (e) => {
-    mx = e.clientX; my = e.clientY;
-    cursor.style.left = mx + 'px';
-    cursor.style.top  = my + 'px';
-  });
-
-  (function animateFollower() {
-    fx += (mx - fx) * 0.12;
-    fy += (my - fy) * 0.12;
-    follower.style.left = fx + 'px';
-    follower.style.top  = fy + 'px';
-    requestAnimationFrame(animateFollower);
-  })();
-
-  document.querySelectorAll('a, button, .service-card, .work-card, .team-card, .pricing-card').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.style.width   = '16px'; cursor.style.height = '16px';
-      follower.style.width = '56px'; follower.style.height = '56px';
-      follower.style.borderColor = 'rgba(0,229,255,0.7)';
-    });
-    el.addEventListener('mouseleave', () => {
-      cursor.style.width   = '8px';  cursor.style.height = '8px';
-      follower.style.width = '36px'; follower.style.height = '36px';
-      follower.style.borderColor = 'rgba(0,229,255,0.4)';
-    });
-  });
+/* Run an init step in isolation — one failure (e.g. a CDN
+   script that didn't load) should never prevent the rest
+   of the page, like the stat counters, from working. */
+function safeInit(fn) {
+  try { fn(); } catch (err) { console.error(fn.name + ' failed:', err); }
 }
-
 /* ─── NAVBAR ─────────────────────────────── */
 function initNavbar() {
   const nav = document.getElementById('navbar');
@@ -167,12 +129,12 @@ function initThreeJS() {
   const camera = new THREE.PerspectiveCamera(60, w / h, 0.1, 100);
   camera.position.z = 5;
 
-  const count     = 1800;
+  const count     = 1100;
   const positions = new Float32Array(count * 3);
   const colors    = new Float32Array(count * 3);
   const palette   = [
-    new THREE.Color(0x00e5ff), new THREE.Color(0x7c3aed),
-    new THREE.Color(0xff6b35), new THREE.Color(0xffffff),
+    new THREE.Color(0x7c6cff), new THREE.Color(0x36d6e0),
+    new THREE.Color(0x9b8cff), new THREE.Color(0xf3f1fa),
   ];
 
   for (let i = 0; i < count; i++) {
@@ -186,20 +148,20 @@ function initThreeJS() {
   const geo = new THREE.BufferGeometry();
   geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geo.setAttribute('color',    new THREE.BufferAttribute(colors, 3));
-  const mat    = new THREE.PointsMaterial({ size:0.04, vertexColors:true, transparent:true, opacity:0.7, sizeAttenuation:true });
+  const mat    = new THREE.PointsMaterial({ size:0.035, vertexColors:true, transparent:true, opacity:0.55, sizeAttenuation:true });
   const points = new THREE.Points(geo, mat);
   scene.add(points);
 
   const torus = new THREE.Mesh(
     new THREE.TorusGeometry(2.5, 0.5, 8, 50),
-    new THREE.MeshBasicMaterial({ color:0x00e5ff, wireframe:true, opacity:0.06, transparent:true })
+    new THREE.MeshBasicMaterial({ color:0x36d6e0, wireframe:true, opacity:0.05, transparent:true })
   );
   torus.position.set(4, -1, -2);
   scene.add(torus);
 
   const ico = new THREE.Mesh(
     new THREE.IcosahedronGeometry(1.2, 0),
-    new THREE.MeshBasicMaterial({ color:0x7c3aed, wireframe:true, opacity:0.08, transparent:true })
+    new THREE.MeshBasicMaterial({ color:0x7c6cff, wireframe:true, opacity:0.06, transparent:true })
   );
   ico.position.set(-4.5, 1.5, -1);
   scene.add(ico);
